@@ -1,0 +1,24 @@
+---
+- name: Set fast key repeat rate
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: 1
+    state: present
+
+- name: Set shorter delay until key repeat
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: 10
+    state: present
+
+- name: Show all filename extensions in Finder
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+    state: present

@@ -1,0 +1,44 @@
+---
+- name: Ensure Homebrew is installed
+  stat:
+    path: /opt/homebrew/bin/brew
+  failed_when: not brew_installed.stat.exists
+
+- name: Install Chezmoi with Homebrew
+  community.general.homebrew:
+    name: chezmoi
+    state: present
+
+- name: Install Starship with Homebrew
+  community.general.homebrew:
+    name: starship
+    state: present
+
+- name: Install ripgrep with Homebrew
+  community.general.homebrew:
+    name: ripgrep
+    state: present``
+
+- name: Initialize Chezmoi with GitHub dotfiles repository
+  command: chezmoi init https://github.com/sjames-au/dotfiles.git
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/share/chezmoi"
+
+- name: Check for outstanding changes in Chezmoi repo
+  command: git status --porcelain
+  args:
+    chdir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
+  register: git_status
+  changed_when: false
+  failed_when: false
+
+- name: Check for differences in Chezmoi
+  command: chezmoi diff
+  register: chezmoi_diff
+  changed_when: false
+  ignore_errors: true
+  check_mode: no
+
+- name: Apply Chezmoi changes if there are any
+  command: chezmoi apply
+  when: chezmoi_diff.stdout != "" and git_status.stdout == ""

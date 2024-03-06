@@ -1,0 +1,14 @@
+---
+# NOTE: Shell environment and dotfiles are managed via dotfiles.yml
+#       This may include core requirements for a happy shell environment
+#       such as zsh, oh-my-zsh, and other shell utilities
+- name: Ensure Homebrew is installed
+  stat:
+    path: /opt/homebrew/bin/brew 
+  register: brew_installed
+  failed_when: brew_installed.stat.exists == False
+
+- name: Install Rio (Terminal/Cask)
+  homebrew_cask:
+    name: rio
+    state: present
