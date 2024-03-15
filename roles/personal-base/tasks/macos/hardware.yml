@@ -1,0 +1,164 @@
+###############################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+###############################################################################
+
+- name: enable tap to click on trackpad
+  community.general.osx_defaults:
+    domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+    key: Clicking
+    type: int
+    value: 1
+    state: present
+
+- name: enable tap to click on mouse for user
+  community.general.osx_defaults:
+    host: currenthost
+    domain: com.apple.AppleMultitouchMouse
+    key: MouseButtonMode
+    type: string
+    value: TwoButton
+    state: present
+
+- name: enable one finger double tap on mouse for use
+  community.general.osx_defaults:
+    host: currenthost
+    domain: com.apple.AppleMultitouchMouse
+    key: MouseOneFingerDoubleTapGesture
+    type: int
+    value: 1
+    state: present
+
+- name: enable tap to click on mouse login screen
+  community.general.osx_defaults:
+    host: currenthost
+    domain: NSGlobalDomain
+    key: com.apple.mouse.tapBehavior
+    type: int
+    value: 1
+    state: present
+
+- name: Disable “natural” (Lion-style) scrolling
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: com.apple.swipescrolldirection
+    type: bool
+    value: false
+    state: present
+
+- name: Enable full keyboard access for all controls
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleKeyboardUIMode
+    type: int
+    value: 3
+    state: present
+
+- name: Use scroll gesture with modifier key to zoom
+  community.general.osx_defaults:
+    domain: com.apple.universalaccess
+    key: closeViewScrollWheelToggle
+    type: bool
+    value: true
+    state: present
+
+- name: Set ctrl (^) to modifier key for zoom
+  community.general.osx_defaults:
+    domain: com.apple.universalaccess
+    key: HIDScrollZoomModifierMask
+    type: int
+    value: 262144
+    state: present
+
+- name: Follow the keyboard focus while zoomed in
+  community.general.osx_defaults:
+    domain: com.apple.universalaccess
+    key: closeViewZoomFollowsFocus
+    type: bool
+    value: true
+    state: present
+
+- name: Disable press-and-hold for keys in favor of key repeat
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: ApplePressAndHoldEnabled
+    type: bool
+    value: false
+    state: present
+
+- name: Set a blazingly fast keyboard repeat rate
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: KeyRepeat
+    type: int
+    value: 1
+    state: present
+
+- name: Set shorter delay until key repeat
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: InitialKeyRepeat
+    type: int
+    value: 10
+    state: present
+
+- name: Automatically illuminate built-in MacBook keyboard in low light
+  community.general.osx_defaults:
+    domain: com.apple.BezelServices
+    key: kDim
+    type: bool
+    value: true
+    state: present
+
+- name: Turn off keyboard illumination when computer is not used for 5 minutes
+  community.general.osx_defaults:
+    domain: com.apple.BezelServices
+    key: kDimTime
+    type: int
+    value: 300
+    state: present
+
+- name: Set language
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleLanguages
+    type: array
+    value: [en]
+    state: present
+
+- name: Set locale
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleLocale
+    type: string
+    value: en_AU@currency=AUD
+    state: present
+
+- name: Set Measurement
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleMeasurementUnits
+    type: string
+    value: Centimeters
+    state: present
+
+- name: Enable Metric Units
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleMetricUnits
+    type: bool
+    value: true
+    state: present
+
+- name: Set Time Zone
+  shell: 'systemsetup -settimezone "Australia/Melbourne" > /dev/null'
+  changed_when: false
+  become: yes
+  when: ansible_become_password is defined
+
+- name: Enable auto-correct
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSAutomaticSpellingCorrectionEnabled
+    type: bool
+    value: true
+    state: present

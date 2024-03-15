@@ -9,23 +9,13 @@
     name: chezmoi
     state: present
 
-- name: Install Starship with Homebrew
-  community.general.homebrew:
-    name: starship
-    state: present
-
-- name: Install ripgrep with Homebrew
-  community.general.homebrew:
-    name: ripgrep
-    state: present``
-
 - name: Initialize Chezmoi with GitHub dotfiles repository
-  command: chezmoi init https://github.com/sjames-au/dotfiles.git
+  ansible.builtin.command: chezmoi init https://github.com/sjames-au/dotfiles.git
   args:
     creates: "{{ ansible_env.HOME }}/.local/share/chezmoi"
 
 - name: Check for outstanding changes in Chezmoi repo
-  command: git status --porcelain
+  ansible.builtin.command: git status --porcelain
   args:
     chdir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
   register: git_status
@@ -33,12 +23,12 @@
   failed_when: false
 
 - name: Check for differences in Chezmoi
-  command: chezmoi diff
+  ansible.builtin.command: chezmoi diff
   register: chezmoi_diff
   changed_when: false
   ignore_errors: true
-  check_mode: no
+  check_mode: true
 
 - name: Apply Chezmoi changes if there are any
-  command: chezmoi apply
+  ansible.builtin.command: chezmoi apply
   when: chezmoi_diff.stdout != "" and git_status.stdout == ""

@@ -1,0 +1,25 @@
+---
+# Original Sources and Inspirations:
+#  https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+#  https://github.com/paulirish/dotfiles/blob/master/.osx
+
+- name: MacOS Configure General, UI and UX
+  ansible.builtin.include_tasks: macos/general.yml
+
+- name: MacOS Configure hardware
+  ansible.builtin.include_tasks: macos/hardware.yml
+
+- name: MacOS Configure screen
+  ansible.builtin.include_tasks: macos/screen.yml
+
+- name: MacOS Configure finder
+  ansible.builtin.include_tasks: macos/finder.yml
+
+- name: MacOS Configure dock, dash, and hotcorners
+  ansible.builtin.include_tasks: macos/ddh.yml
+
+- name: MacOS Configure Safari
+  ansible.builtin.include_tasks: macos/safari.yml
+
+- name: MacOS Configure Mail
+  ansible.builtin.include_tasks: macos/mail.yml

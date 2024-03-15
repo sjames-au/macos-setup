@@ -1,0 +1,198 @@
+---
+# General MacOS settings
+- name: Turn system boot sound off (Requires super user)
+  shell: 'nvram SystemAudioVolume=" "'
+  changed_when: false
+  become: yes
+  when: ansible_become_pass is defined
+
+- name: Menu bar - disable transparency
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleEnableMenuBarTransparency
+    type: bool
+    value: false
+    state: present
+
+- name: Set sidebar size to medium
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSTableViewDefaultSizeMode
+    type: int
+    value: 2
+    state: present
+
+- name: Always show scrollbars
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleShowScrollBars
+    type: string
+    value: "Always"
+    state: present
+
+- name: Disable smooth scrolling
+# defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSScrollAnimationEnabled
+    type: bool  
+    value: true
+    state: present
+
+- name: Disable opening and closing window animations
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSAutomaticWindowAnimationsEnabled
+    type: bool
+    value: false
+    state: present
+
+- name: Increase window resize speed for Cocoa applications
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSWindowResizeTime
+    type: float
+    value: 0.001
+    state: present
+
+# REVIEW: Expand save panel by default
+# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+
+# REVIEW: Expand print panel by default
+# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+
+# REVIEW: Save to disk (not to iCloud) by default
+# defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+- name: Increase window resize speed for Cocoa applications
+  community.general.osx_defaults:
+    domain: com.apple.print.PrintingPrefs
+    key: "Quit When Finished"
+    type: bool
+    value: true
+    state: present
+
+# REVIEW: Disable the “Are you sure you want to open this application?” dialog
+# defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+- name: Display ASCII control characters using caret notation in standard text views
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSTextShowsControlCharacters
+    type: bool
+    value: true
+    state: present
+
+- name: Disable Resume system-wide
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: NSQuitAlwaysKeepsWindows
+    type: bool
+    value: false
+    state: present
+
+# REVIEW: Disable automatic termination of inactive apps
+# defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+# REVIEW: Disable the crash reporter
+# defaults write com.apple.CrashReporter DialogType -string "none"
+
+# REVIEW: Set Help Viewer windows to non-floating mode
+# defaults write com.apple.helpviewer DevMode -bool true
+
+- name: Login Window, reveal host info by clicking on the clock (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.loginwindow
+    key: AdminHostInfo
+    type: string
+    value: HostName
+    state: present
+  when: ansible_become_pass is defined
+  become: yes
+
+- name: Default to not relaunching apps after restart
+  community.general.osx_defaults:
+    domain: com.apple.loginwindow
+    key: LoginwindowLaunchesRelaunchApps
+    type: bool
+    value: false
+    state: present
+
+# DISABLED as I like to know when my system freezes
+# Restart automatically if the computer freezes
+# systemsetup -setrestartfreeze on
+
+# DISABLED as I am OK with my system sleeping by default
+# Never go into computer sleep mode
+# systemsetup -setcomputersleep Off > /dev/null
+
+- name: Check for software updates daily, not just once per week (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.SoftwareUpdate.plist
+    key: ScheduleFrequency
+    type: int
+    value: 1
+    state: present
+  when: ansible_become_pass is defined
+  become: yes
+
+- name: Automatically Install MacOS updates (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.SoftwareUpdate.plist
+    key: AutomaticallyInstallMacOSUpdates
+    type: bool
+    value: true
+    state: present
+  when: ansible_become_pass is defined
+  become: yes
+
+- name: Automatically check for updates (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.SoftwareUpdate
+    key: AutomaticCheckEnabled
+    type: bool
+    value: true
+    state: present
+  when: ansible_become_pass is defined
+  become: yes
+
+- name: Automatically download updates (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.SoftwareUpdate
+    key: AutomaticDownload
+    type: bool
+    value: true
+    state: present
+  become: yes
+  when: ansible_become_pass is defined
+
+- name: Install critical updates (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.SoftwareUpdate
+    key: CriticalUpdateInstall
+    type: bool
+    value: true
+    state: present
+  become: yes
+  when: ansible_become_pass is defined
+
+- name: Automatically install updates for security controls e.g. GateKeeper (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.SoftwareUpdate
+    key: ConfigDataInstall
+    type: bool
+    value: true
+    state: present
+  become: yes
+  when: ansible_become_pass is defined
+
+- name: App Store - Enable Automatic updates (Requires super user)
+  community.general.osx_defaults:
+    domain: /Library/Preferences/com.apple.commerce.plist
+    key: AutoUpdate
+    type: bool
+    value: true
+    state: present
+  become: yes
+  when: ansible_become_pass is defined
+

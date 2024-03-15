@@ -1,0 +1,193 @@
+
+###############################################################################
+# Dock, Dashboard, and hot corners                                            #
+###############################################################################
+
+- name: Dock - Enable highlight hover effect for the grid view of a stack (Dock)
+  osx_defaults:
+    domain: com.apple.dock
+    key: mouse-over-hilite-stack
+    type: bool
+    value: true
+    state: present
+
+- name: Dock - Set the icon size of Dock items to 36 pixels
+  osx_defaults:
+    domain: com.apple.dock
+    key: tilesize
+    type: int
+    value: 36
+    state: present
+
+- name: Dock - Enable spring loading for all Dock items
+  osx_defaults:
+    domain: com.apple.dock
+    key: enable-spring-load-actions-on-all-items
+    type: bool
+    value: true
+    state: present
+
+- name: Dock - Show indicator lights for open applications in the Dock
+  osx_defaults:
+    domain: com.apple.dock
+    key: show-process-indicators
+    type: bool
+    value: true
+    state: present
+
+- name: Dock - Clear out persistent-apps
+  osx_defaults:
+    domain: com.apple.dock
+    key: persistent-apps
+    type: array
+    value: []
+    state: present
+
+- name: Dock - Remove persistent-apps
+  osx_defaults:
+    domain: com.apple.dock
+    key: persistent-apps
+    type: array
+    value: []
+    state: present
+
+# Add a spacer to the left side of the Dock (where the applications are)
+# defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+# Add a spacer to the right side of the Dock (where the Trash is)
+# defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
+
+- name: Dock - Don’t animate opening applications from the Dock
+  osx_defaults:
+    domain: com.apple.dock
+    key: launchanim
+    type: bool
+    value: false
+    state: present
+
+- name: Dock - Remove the auto-hiding Dock delay
+  osx_defaults:
+    domain: com.apple.dock
+    key: autohide-delay
+    type: float
+    value: 0
+    state: present
+
+- name: Dock - Remove the animation when hiding/showing the Dock
+  osx_defaults:
+    domain: com.apple.dock
+    key: autohide-time-modifier
+    type: float
+    value: 0
+    state: present
+
+- name: Dock - Automatically hide and show the Dock
+  osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+    state: present
+
+- name: Dock - Disable Dock magnification
+  osx_defaults:
+    domain: com.apple.dock
+    key: magnification
+    type: bool
+    value: false
+    state: present
+
+- name: Dock - Make Dock icons of hidden applications translucent
+  osx_defaults:
+    domain: com.apple.dock
+    key: showhidden
+    type: bool
+    value: true
+    state: present
+
+###############
+# Hot corners #
+###############
+
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+
+- name: Hot Corners - Top Left Action (None)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-tl-corner
+    type: int
+    value: 0
+    state: present
+
+- name: Hot Corners - Top Left Modifier (None)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-tl-modifier
+    type: int
+    value: 0
+    state: present
+
+- name: Hot Corners - Top Right Action (Show Desktop)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-tr-corner
+    type: int
+    value: 4
+    state: present
+
+- name: Hot Corners - Top Right Modifier (None)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-tr-modifier
+    type: int
+    value: 0
+    state: present
+
+- name: Hot Corners - Bottom Left Action (Start Screen Saver/Lock)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-bl-corner
+    type: int
+    value: 5
+    state: present
+
+- name: Hot Corners - Bottom Left Modifier (None)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-bl-modifier
+    type: int
+    value: 0
+    state: present
+
+- name: Hot Corners - Bottom Right Action (Disable Screen Saver)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-br-corner
+    type: int
+    value: 6
+    state: present
+
+- name: Hot Corners - Bottom Right Modifier (None)
+  osx_defaults:
+    domain: com.apple.dock
+    key: wvous-br-modifier
+    type: int
+    value: 0
+    state: present
+
+- ansible.builtin.include_tasks: restart_process.yml
+  vars:
+    app_name: Dock
+
+- ansible.builtin.include_tasks: restart_process.yml
+  vars:
+    app_name: Dashboard

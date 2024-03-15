@@ -1,0 +1,61 @@
+###############################################################################
+# Screen                                                                      #
+###############################################################################
+
+- name: Ask for password after sleep or screensaver
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPassword
+    type: int
+    value: 1
+    state: present
+
+- name: Immediately ask for password after sleep or screensaver
+  community.general.osx_defaults:
+    domain: com.apple.screensaver
+    key: askForPasswordDelay
+    type: int
+    value: 0
+    state: present
+
+# As I use tilde for home location, we get the current valye ourselves
+- name: Read screenshots save location
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: location
+    state: list
+  register: scl
+
+- name: Save screenshots to the Downloads\Screen Captures
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: location
+    type: string
+    value: ~/Downloads/Screen Captures
+    state: present
+  when: (scl.value == 'None') or (not scl.value.endswith('/Downloads/Screen Captures') )
+    
+- name: Disable shadow in screenshots
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: disable-shadow
+    type: bool
+    value: true
+    state: present
+
+- name: Save screenshots in PNG format
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: type
+    type: string
+    value: png
+    state: present
+
+- name: Enable subpixel font rendering on non-Apple LCDs
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: AppleFontSmoothing
+    type: int
+    value: 2
+    state: present
+

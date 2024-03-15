@@ -1,0 +1,35 @@
+---
+# Apple Mail settings
+- name: Mail - Disable Reply Animations
+  osx_defaults:
+    domain: com.apple.mail
+    key: DisableReplyAnimations
+    type: bool
+    value: true
+    state: present
+
+- name: Mail - Disable Send Animations
+  osx_defaults:
+    domain: com.apple.mail
+    key: DisableSendAnimations
+    type: bool
+    value: true
+    state: present
+
+- name: Mail - Copy email addresses as foo@example.com instead of Foo Bar <foo@example.com>
+  osx_defaults:
+    domain: com.apple.mail
+    key: AddressesIncludeNameOnPasteboard
+    type: bool
+    value: false
+    state: present
+
+# TODO
+# Needs feature at https://github.com/ansible-collections/community.general/pull/3420
+#- name: Mail - Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
+#  osx_defaults:
+#    domain: com.apple.mail
+#    key: NSUserKeyEquivalents
+#    type: dict
+#    value: {"Send", "@\\U21a9"}
+#    state: present

@@ -1,0 +1,113 @@
+
+###############################################################################
+# Safari & WebKit                                                             #
+###############################################################################
+
+- name: Safari - Set the start page as the home page (default)
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: HomePage
+    type: string
+    value: https://www.apple.com/startpage/
+    state: present
+
+# New windows open with:
+# 0 = Homepage
+# 1 = Empty page
+# 2 = Same page
+# 4 = Top Sites
+# 5 = Tabs for Favorites Bar
+- name: Safari - New windows open an Empty Page
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: NewWindowBehavior
+    type: int
+    value: 0
+    state: present
+
+# New tabs open with:
+# 0 = Homepage
+# 1 = Empty page
+# 2 = Same page
+# 4 = Top Sites
+- name: Safari - New taps open an Empty Page
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: NewTabBehavior
+    type: int
+    value: 1
+    state: present
+
+- name: Safari - Prevent Safari from opening ‘safe’ files automatically after downloading
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: AutoOpenSafeDownloads
+    type: bool
+    value: false
+    state: present
+
+# Useful until you hit backspace on a long form and lose everything
+# Don't allow hitting the Backspace key to go to the previous page in history
+- name: Safari - Don't allow hitting the Backspace key to go to the previous page in history
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled
+    type: bool
+    value: false
+    state: present
+
+- name: Safari - Hide Safari’s bookmarks bar by default
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: ShowFavoritesBar
+    type: bool
+    value: false
+    state: present
+
+- name: Safari - Enable Safari’s debug menu
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: IncludeInternalDebugMenu
+    type: bool
+    value: true
+    state: present
+
+- name: Safari - Make Safari’s search banners default to Contains instead of Starts With
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: FindOnPageMatchesWordStartsOnly
+    type: bool
+    value: false
+    state: present
+
+- name: Safari - Enable the Develop menu and the Web Inspector in Safari [1]
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: IncludeDevelopMenu
+    type: bool
+    value: true
+    state: present
+
+- name: Safari - Enable the Develop menu and the Web Inspector in Safari [2]
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: WebKitDeveloperExtrasEnabledPreferenceKey
+    type: bool
+    value: true
+    state: present
+
+- name: Safari - Enable the Develop menu and the Web Inspector in Safari [2]
+  community.general.osx_defaults:
+    domain: com.apple.Safari
+    key: com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled
+    type: bool
+    value: true
+    state: present
+
+- name: Safari - Add a context menu item for showing the Web Inspector in web views
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: WebKitDeveloperExtras
+    type: bool
+    value: true
+    state: present

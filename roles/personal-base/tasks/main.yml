@@ -1,9 +1,6 @@
 ---
 - name: Import macOS settings tasks
-  import_tasks: macos-settings.yml
+  import_tasks: macos/main.yml
 
-# - name: Import dotfiles tasks
-#   import_tasks: dotfiles.yml
-
-- name: Import homebrew tasks
-  import_tasks: homebrew-developer.yml
+- name: Import dotfiles tasks
+  import_tasks: dotfiles.yml

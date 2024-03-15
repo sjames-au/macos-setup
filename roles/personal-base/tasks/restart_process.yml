@@ -1,0 +1,10 @@
+- name: Check for running {{ app_name }}
+  command: pgrep -x "{{ app_name }}"
+  register: result
+  failed_when: result.rc >= 2
+  changed_when: false
+
+- name: Restart {{ app_name }}
+  command: killall "{{ app_name }}"
+  when: result.rc == 0
+  changed_when: false
