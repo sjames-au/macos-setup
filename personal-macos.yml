@@ -1,6 +1,7 @@
 ---
-- hosts: localhost
+- name: My MacOS Setup
+  hosts: localhost
   connection: local
-  gather_facts: yes
+  gather_facts: true
   roles:
     - personal-base
