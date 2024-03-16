@@ -26,6 +26,10 @@
     state: list
   register: scl
 
+- name: Dump the scl variable
+  debug:
+    var: scl
+
 - name: Save screenshots to the Downloads\Screen Captures
   community.general.osx_defaults:
     domain: com.apple.screencapture
