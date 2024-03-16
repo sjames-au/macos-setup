@@ -184,6 +184,14 @@
     value: 0
     state: present
 
+- name: Window Manager - disable click to reveal desktop
+  osx_defaults:
+    domain: com.apple.WindowManager
+    key: EnableStandardClickToShowDesktop
+    type: string
+    value: 0
+    state: present
+
 - ansible.builtin.include_tasks: restart_process.yml
   vars:
     app_name: Dock
