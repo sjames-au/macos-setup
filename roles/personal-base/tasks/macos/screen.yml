@@ -26,10 +26,6 @@
     state: list
   register: scl
 
-- name: Dump the scl variable
-  debug:
-    var: scl
-
 - name: Save screenshots to the Downloads\Screen Captures
   community.general.osx_defaults:
     domain: com.apple.screencapture
@@ -37,7 +33,8 @@
     type: string
     value: ~/Downloads/Screen Captures
     state: present
-  when: (scl.value | default('')) == '' or (not scl.value.endswith('/Downloads/Screen Captures'))
+  #when: (scl.value is None) or ((scl.value is not None) and not scl.value.endswith('/Downloads/Screen Captures'))
+  when: scl.value is not none and not scl.value.endswith('/Downloads/Screen Captures')
     
 - name: Disable shadow in screenshots
   community.general.osx_defaults:
