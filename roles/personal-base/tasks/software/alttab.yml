@@ -1,0 +1,9 @@
+---
+- name: AltTab - use command-tab for alt-tab
+  community.general.osx_defaults:
+    domain: com.lwouis.alt-tab-macos
+    key: holdShortcut
+    type: string
+    value: "\\U2318"
+    state: present
+

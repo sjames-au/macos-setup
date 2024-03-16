@@ -1,0 +1,4 @@
+---
+- name: Configure AltTab Application
+  ansible.builtin.include_tasks: software/alttab.yml
+

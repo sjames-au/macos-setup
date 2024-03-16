@@ -4,3 +4,6 @@
 
 - name: Import dotfiles tasks
   import_tasks: dotfiles.yml
+
+- name: Import software configuration tasks
+  import_tasks: software/main.yml
