@@ -188,8 +188,8 @@
   osx_defaults:
     domain: com.apple.WindowManager
     key: EnableStandardClickToShowDesktop
-    type: string
-    value: 0
+    type: bool
+    value: false
     state: present
 
 - ansible.builtin.include_tasks: restart_process.yml
