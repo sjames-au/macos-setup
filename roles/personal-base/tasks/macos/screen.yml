@@ -37,7 +37,7 @@
     type: string
     value: ~/Downloads/Screen Captures
     state: present
-  when: (scl.value == 'None') or (not scl.value.endswith('/Downloads/Screen Captures') )
+  when: (scl.value | default('')) == '' or (not scl.value.endswith('/Downloads/Screen Captures'))
     
 - name: Disable shadow in screenshots
   community.general.osx_defaults:
